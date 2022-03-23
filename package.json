@@ -4,12 +4,9 @@
   "description": "",
   "main": "./dist/server.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
