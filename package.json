@@ -2,7 +2,7 @@
   "name": "tunarg-server",
   "version": "0.0.6",
   "description": "",
-  "main": "./dist/index.js",
+  "main": "./dist/server.js",
   "types": "./dist/types/index.d.ts",
   "module": "./esm/index.js",
   "scripts": {
