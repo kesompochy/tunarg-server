@@ -4,6 +4,7 @@
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
+  "module": "./esm/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
