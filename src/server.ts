@@ -5,10 +5,6 @@ type actionFunction = (ws: WebSocket, content?: any)=>{};
 
 export default abstract class Server{
     readonly wss: typeof WebSocketServer;
-    private _connection: Array<WebSocket> = [];
-    get connection(){
-        return this._connection;
-    }
     private _actions: {
         [K in any]: actionFunction;
     } = {};
@@ -20,7 +16,6 @@ export default abstract class Server{
         this.wss = wss;
 
         wss.on('connection', (ws: typeof WebSocketServer)=>{
-            this._connection.push(ws);
             ws.on('message', (mes: any)=>{
                 
                 const json: ITunargProtocol = JSON.parse(mes);
