@@ -1,19 +1,21 @@
 const WebSocketServer = require('ws').Server;
 import type ITunargProtocol from "./protocol";
 
-type actionFunction = (ws: WebSocket, content?: any)=>{};
-
 export default abstract class Server{
     readonly wss: typeof WebSocketServer;
     private _actions: {
-        [K in any]: actionFunction;
+        [K in any]: Function;
     } = {};
     get actions() {
         return this._actions;
     }
-    constructor(server: string | URL){
+    constructor(server: string | URL, actions?: {[K in any]: Function}){
         const wss = new WebSocketServer({server: server});
         this.wss = wss;
+
+        for(let type in actions){
+            this.addAction(type, actions[type]);
+        }
 
         wss.on('connection', (ws: typeof WebSocketServer)=>{
             ws.on('message', (mes: any)=>{
@@ -36,7 +38,7 @@ export default abstract class Server{
     send(ws: WebSocket, type: string, content: any){
         ws.send(JSON.stringify({type: type, content: content}));
     }
-    addAction(type: string, action: actionFunction){
+    addAction(type: string, action: Function){
         this.actions[type] = action;
     }
 }
