@@ -1,28 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const WebSocketServer = require('ws').Server;
-class Server {
-    constructor(server) {
+var WebSocketServer = require('ws').Server;
+var Server = /** @class */ (function () {
+    function Server(server) {
+        var _this = this;
         this.connection = [];
-        const wss = new WebSocketServer({ server: server });
+        var wss = new WebSocketServer({ server: server });
         this.wss = wss;
-        wss.on('connection', (ws) => {
-            this.connection.push(ws);
-            ws.on('message', (mes) => {
-                const json = JSON.parse(mes);
-                const type = json.type;
-                const content = json.content;
-                if (this._actions[type]) {
-                    this._actions[type].bind(this)(ws, content);
+        wss.on('connection', function (ws) {
+            _this.connection.push(ws);
+            ws.on('message', function (mes) {
+                var json = JSON.parse(mes);
+                var type = json.type;
+                var content = json.content;
+                if (_this._actions[type]) {
+                    _this._actions[type].bind(_this)(ws, content);
                 }
                 else {
-                    this._typeErrorAction(ws, type);
+                    _this._typeErrorAction(ws, type);
                 }
             });
         });
     }
-    _typeErrorAction(ws, type) {
-        ws.send(JSON.stringify({ type: 'error', content: `there is no transmission type "${type}".` }));
-    }
-}
+    Server.prototype._typeErrorAction = function (ws, type) {
+        ws.send(JSON.stringify({ type: 'error', content: "there is no transmission type \"".concat(type, "\".") }));
+    };
+    return Server;
+}());
 exports.default = Server;
