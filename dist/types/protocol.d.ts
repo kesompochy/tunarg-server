@@ -1,4 +1,4 @@
-export default interface ITunargProtocol {
+export default interface Protocol {
     type: string;
     content: any;
 }

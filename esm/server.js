@@ -1,11 +1,10 @@
 const WebSocketServer = require('ws').Server;
 export default class Server {
     constructor(server) {
-        this.connection = [];
+        this._actions = {};
         const wss = new WebSocketServer({ server: server });
         this.wss = wss;
         wss.on('connection', (ws) => {
-            this.connection.push(ws);
             ws.on('message', (mes) => {
                 const json = JSON.parse(mes);
                 const type = json.type;
@@ -19,7 +18,16 @@ export default class Server {
             });
         });
     }
+    get actions() {
+        return this._actions;
+    }
     _typeErrorAction(ws, type) {
         ws.send(JSON.stringify({ type: 'error', content: `there is no transmission type "${type}".` }));
+    }
+    send(ws, type, content) {
+        ws.send(JSON.stringify({ type: type, content: content }));
+    }
+    addAction(type, action) {
+        this.actions[type] = action;
     }
 }
