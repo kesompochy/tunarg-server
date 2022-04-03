@@ -1,9 +1,12 @@
 const WebSocketServer = require('ws').Server;
 export default class Server {
-    constructor(server) {
+    constructor(server, actions) {
         this._actions = {};
         const wss = new WebSocketServer({ server: server });
         this.wss = wss;
+        for (let type in actions) {
+            this.addAction(type, actions[type]);
+        }
         wss.on('connection', (ws) => {
             ws.on('message', (mes) => {
                 const json = JSON.parse(mes);

@@ -1,17 +1,18 @@
 declare const WebSocketServer: any;
-declare type actionFunction = (ws: WebSocket, content?: any) => {};
 export default abstract class Server {
     readonly wss: typeof WebSocketServer;
     private _actions;
     get actions(): {
-        [x: string]: actionFunction;
-        [x: number]: actionFunction;
-        [x: symbol]: actionFunction;
+        [x: string]: Function;
+        [x: number]: Function;
+        [x: symbol]: Function;
     };
-    constructor(server: string | URL);
+    constructor(server: string | URL, actions?: {
+        [K in any]: Function;
+    });
     private _typeErrorAction;
     send(ws: WebSocket, type: string, content: any): void;
-    addAction(type: string, action: actionFunction): void;
+    addAction(type: string, action: Function): void;
 }
 export {};
 //# sourceMappingURL=server.d.ts.map

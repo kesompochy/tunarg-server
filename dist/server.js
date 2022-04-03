@@ -2,11 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var WebSocketServer = require('ws').Server;
 var Server = /** @class */ (function () {
-    function Server(server) {
+    function Server(server, actions) {
         var _this = this;
         this._actions = {};
         var wss = new WebSocketServer({ server: server });
         this.wss = wss;
+        for (var type in actions) {
+            this.addAction(type, actions[type]);
+        }
         wss.on('connection', function (ws) {
             ws.on('message', function (mes) {
                 var json = JSON.parse(mes);
