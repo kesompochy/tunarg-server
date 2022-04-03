@@ -11,7 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "npm run build",
-    "build": "tsc --project tsconfig.json && tsc --project tsconfig.esm.json"
+    "build": "tsc --project tsconfig.json && tsc --project tsconfig.esm.json",
+    "buildw": "tsc --project tsconfig.json -w && tsc --project tsconfig.esm.json -w"
   },
   "keywords": [],
   "author": "",

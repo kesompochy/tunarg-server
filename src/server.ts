@@ -18,6 +18,7 @@ export default abstract class Server{
         }
 
         wss.on('connection', (ws: typeof WebSocketServer)=>{
+            console.log('connect!')
             ws.on('message', (mes: any)=>{
                 
                 const json: ITunargProtocol = JSON.parse(mes);
@@ -25,7 +26,7 @@ export default abstract class Server{
                 const content = json.content;
 
                 if(this._actions[type]){
-                    this._actions[type].bind(this)(ws, content);
+                    this._actions[type](ws, content);
                 } else {
                     this._typeErrorAction(ws, type);
                 }

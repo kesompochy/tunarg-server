@@ -11,12 +11,13 @@ var Server = /** @class */ (function () {
             this.addAction(type, actions[type]);
         }
         wss.on('connection', function (ws) {
+            console.log('connect!');
             ws.on('message', function (mes) {
                 var json = JSON.parse(mes);
                 var type = json.type;
                 var content = json.content;
                 if (_this._actions[type]) {
-                    _this._actions[type].bind(_this)(ws, content);
+                    _this._actions[type](ws, content);
                 }
                 else {
                     _this._typeErrorAction(ws, type);
